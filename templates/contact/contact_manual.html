@@ -1,0 +1,46 @@
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us - Manual Form</title>
+</head>
+<body>
+<h2>Contact Us (Manual Form)</h2>
+
+{% for message in messages %}
+    <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+    {{ message }}
+</p>
+
+{% endfor %}
+
+<form method="post">
+    {% csrf_token %}
+    <label for="id_name">Name:</label>
+    <input type="text" name="name" id="id_name" value="{{ form.name.value }}">
+    {% if form.name.errors %}
+        <p style="color:red">{{ form.name.errors.0 }}</p>
+    {% endif %}
+
+    <br>
+
+    <label for="id_email">Email:</label>
+    <input type="email" name="email" id="id_email" value="{{ form.email.value }}">
+    {% if form.email.errors %}
+        <p style="color:red">{{ form.email.errors.0 }}</p>
+    {% endif %}
+
+    <br>
+
+    <label for="id_message">Message:</label>
+    <textarea name="message" id="id_message">{{ form.message.value }}</textarea>
+    {% if form.message.errors %}
+        <p style="color:red">{{ form.message.errors.0 }}</p>
+    {% endif %}
+
+    <br>
+    <button type="submit">Send</button>
+</form>
+
+</body>
+</html>
